@@ -43,7 +43,8 @@ vagrant halt
 Utilization Matrix in stop state
 ![Vagrant Version Screenshot](Images/SS9.png)
 
-Remove VM
 
 Vagrent destroy 
+
+
 ![Vagrant Version Screenshot](Images/SS10.png)
