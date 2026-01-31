@@ -21,11 +21,11 @@ This screenshot show about Vagrant ssh command
 ![Vagrant Version Screenshot](Images/SS5.png)
 
 ## Installing the Nginx inside the VM
-
+```bash
 sudo apt update
 sudo apt install -y nginx
 sudo systemctl start nginx
-
+```
 ## Verify Nginx
 
 curl Host
