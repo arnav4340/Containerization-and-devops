@@ -1,94 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Arnav | Cloud & DevOps Portfolio</title>
+<meta charset="UTF-8">
+<title>Containerization & DevOps | Arnav</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(to right, #1f4037, #99f2c8);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 
-    .container {
-      background: white;
-      width: 90%;
-      max-width: 600px;
-      padding: 40px;
-      border-radius: 15px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      text-align: center;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: white;
+}
 
-    h1 {
-      color: #2c3e50;
-      margin-bottom: 10px;
-    }
+.wrapper {
+  max-width: 900px;
+  margin: auto;
+  padding: 60px 20px;
+}
 
-    p {
-      color: #555;
-      margin-bottom: 30px;
-    }
+h1 {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
 
-    .card {
-      display: block;
-      background: #f4f6f8;
-      padding: 20px;
-      margin: 15px 0;
-      border-radius: 10px;
-      text-decoration: none;
-      color: #2c3e50;
-      font-size: 18px;
-      font-weight: bold;
-      transition: 0.3s;
-    }
+.subtitle {
+  font-size: 18px;
+  opacity: 0.8;
+  margin-bottom: 40px;
+}
 
-    .card:hover {
-      background: #2ecc71;
-      color: white;
-      transform: scale(1.03);
-    }
+.info-card {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 50px;
+}
 
-    footer {
-      margin-top: 25px;
-      font-size: 14px;
-      color: #777;
-    }
-  </style>
+.info-box {
+  background: rgba(255,255,255,0.08);
+  padding: 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
 
+.info-box span {
+  display: block;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.info-box strong {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.section {
+  background: rgba(255,255,255,0.08);
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+details summary {
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.dropdown a {
+  display: block;
+  padding: 8px 0;
+  text-decoration: none;
+  color: #00e6ff;
+  transition: 0.3s;
+}
+
+.dropdown a:hover {
+  color: #ffffff;
+  padding-left: 10px;
+}
+
+footer {
+  text-align: center;
+  margin-top: 60px;
+  opacity: 0.6;
+  font-size: 14px;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="wrapper">
 
-    <h1>Arnav's Cloud & DevOps Portfolio</h1>
+<h1>Containerization & DevOps</h1>
+<p class="subtitle">Academic Documentation & Practical Work</p>
 
-    <p>
-      Welcome to my project workspace.  
-      Here you can explore my lab experiments and lecture materials.
-    </p>
-
-    <a href="Cloud Lab/" class="card">
-      🧪 Cloud Lab <br>
-      <small>Experiments & Practical Work</small>
-    </a>
-
-    <a href="Cloud Lectures/" class="card">
-      📘 Cloud Lectures <br>
-      <small>Class Notes & Study Material</small>
-    </a>
-
-    <footer>
-      © 2026 | Created by Arnav
-    </footer>
-
+<div class="info-card">
+  <div class="info-box">
+    <span>Name</span>
+    <strong>Arnav</strong>
   </div>
+  <div class="info-box">
+    <span>SAP ID</span>
+    <strong>500121412</strong>
+  </div>
+  <div class="info-box">
+    <span>Roll No</span>
+    <strong>R2142230690</strong>
+  </div>
+  <div class="info-box">
+    <span>Batch</span>
+    <strong>1 (CCVT)</strong>
+  </div>
+</div>
+
+<div class="section">
+  <details>
+    <summary>🧪 Cloud Lab Experiments</summary>
+    <div class="dropdown">
+      <a href="Cloud Lab/Experiment-1/">Experiment-1</a>
+      <a href="Cloud Lab/Experiment-2/">Experiment-2</a>
+      <a href="Cloud Lab/Experiment-3/">Experiment-3</a>
+    </div>
+  </details>
+</div>
+
+<div class="section">
+  <details>
+    <summary>📘 Cloud Lectures</summary>
+    <div class="dropdown">
+      <a href="Cloud Lectures/3 feb/">3 Feb</a>
+      <a href="Cloud Lectures/21 jan/">21 Jan</a>
+      <a href="Cloud Lectures/22 jan/">22 Jan</a>
+      <a href="Cloud Lectures/30 jan/">30 Jan</a>
+      <a href="Cloud Lectures/31 Jan/">31 Jan</a>
+      <a href="Cloud Lectures/java-docker/">Java Docker</a>
+    </div>
+  </details>
+</div>
+
+<footer>
+© 2026 | Containerization & DevOps | Arnav
+</footer>
+
+</div>
 
 </body>
 </html>
