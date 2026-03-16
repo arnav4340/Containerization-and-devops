@@ -8,31 +8,11 @@ The backend service is implemented using Node.js and Express, while PostgreSQL i
 
 Networking is implemented using IPvlan, which assigns static IP addresses to containers inside a defined subnet.
 
-System Architecture
-
-Client → Backend API → PostgreSQL Database
-
-The backend container communicates with the PostgreSQL container using an internal IPvlan network.
-
-Key features implemented:
-
-Multi-stage Docker builds
-
-Separate Dockerfiles
-
-Docker Compose orchestration
-
-IPvlan networking
-
-Static container IPs
-
-Persistent database storage
-
 <hr>
 
 <h4 align="center"> Pre-requisite </h4>
 
-![Directory Structure](./Images/0.png)
+![Directory Structure](./Images/Structure.png)
 
 <hr>
 
@@ -50,134 +30,234 @@ GET /health → check API status
 POST /user → insert user into database
 
 GET /users → fetch users from database**
-```bash
-npm i express pg
-```
 ![Install Package](./Images/2.png)
 
 
-**Step-3:-Package.json Configuration**
+**Step-3:-The package.json file defines the Node.js project metadata and dependencies.
+It includes Express for building the API server and pg for connecting to PostgreSQL.
+
+Dependencies used:
+
+express → Web framework
+
+pg → PostgreSQL client for Node.js**
 ![package.json](./Images/3.png)
 
 
-**Step-4:-Backend Server Implementation-**
+**Step-4:-This Dockerfile builds the backend API using a multi-stage build to create a smaller and optimized image.
+
+Key steps performed:
+
+Uses node:18-alpine as a lightweight base image
+
+Installs dependencies in the build stage
+
+Copies only required files to the runtime stage
+
+Runs the application using a non-root user**
 ![server.js](./Images/4.png)
 
 
-**Step-5:-Backend Dockerfile
-This Dockerfile defines how the backend application container image is built using a minimal Node.js base image**
+**Step-5:-This Dockerfile creates a custom PostgreSQL container image instead of using the default image directly.
+It sets environment variables required for database initialization.
+
+Configured variables:
+
+POSTGRES_DB
+
+POSTGRES_USER
+
+POSTGRES_PASSWORD
+**
+```bash
+```
+FROM postgres:15-alpine
 ![Dockerfile of backend](./Images/5.png)
 
 
-**Step-6:- The .dockerignore file excludes unnecessary files such as node_modules and logs from being copied into the Docker image**
+**Step-6:- The .dockerignore file is used to exclude unnecessary files from the Docker build context.
+This helps reduce build time and prevents unwanted files like node_modules or .git from being copied into the image.**
 ![dockerignore](./Images/6.png)
 
 
-**Step-7:-A separate Dockerfile is created for the PostgreSQL database container**
+**Step-7:-Before building images, Docker Desktop must be running.
+This screenshot confirms that the Docker engine is active and ready to run containers.**
 ![Dockerfile](./Images/7.png)
 
 
-**Step-8:- The `init.sql` will look as follows:-**
+**Step-8:-The docker ps command is used to list all currently running containers.
+At this stage no containers are running yet because the images have not been built.**
+```bash
+docker ps
+```
+
 ![init.sql](./Images/8.png)
 
 
-**Step-9:- The `docker-compose.yml` will look as follows:-**
+**Step-9:-The backend application image is built using the Dockerfile located inside the backend directory.
+This command creates a Docker image named backend-image**
+```bash
+docker build -t backend-image ./backend
+```
 ![docker-compose.yml](./Images/9.png)
 
 
-**Step-10:- Find your interface**
+**Step-10:-Next, the PostgreSQL database image is built using the custom Dockerfile inside the database directory.
+This creates a Docker image named postgres-image.**
 ```bash
-ip a
+docker build -t postgres-image ./database
 ```
 ![Find Interface](./Images/10.png)
 
 
-**Step-11:- Create Network**
+**Step-11:-After building both backend and database images, the docker images command is used to list all available Docker images.
+This confirms that backend-image and postgres-image were successfully created.**
 ```bash
-docker network create -d macvlan \
-  --subnet=192.168.50.0/24 \
-  --gateway=192.168.50.1 \
-  -o parent=eth0 \
-  macvlan_net
+docker images
 ```
 ![Create Network](./Images/11.png)
 
 
-**Step-12:- Build from Compose**
+**Step-12:-Before creating a custom network, we check the currently available Docker networks.
+By default Docker provides bridge, host, and none networks**
 ```bash
-docker-compose up build --no-cache
+docker network ls
 ```
 ![Build Compose](./Images/12.png)
 
 
-**Step-13:- Start Services**
+**Step-13:-A custom ipvlan network is created so containers can receive static IP addresses within the local network range.**
 ```bash
-docker-compose up -d
+docker network create -d ipvlan \
+--subnet=192.168.100.0/24 \
+--gateway=192.168.100.1 \
+-o parent=eth0 \
+myipvlan
 ```
 ![Start Service](./Images/13.png)
 
 
-**Step-14:- Insert A User in DB in API**
+**Step-14:-After creating the network, the docker network ls command is used again to confirm that myipvlan network has been successfully created**
 ```bash
-curl -X POST http://192.168.50.20:3000/users \
--H "Content-Type: application/json" \
--d '{"name":"Dhairya"}'
+docker network ls
 ```
 ![Insert User](./Images/14.png)
 
 
-**Step-15:- GET User API**
+**Step-15:-The ipconfig command is used to check the host machine's network interface and IP configuration.
+This helps determine the correct subnet and gateway when configuring Docker networking.**
 ```bash
-curl http://192.168.50.20:3000/users
+ipconfig
 ```
 ![Get User API](./Images/15.png)
 
 
-**Step-16:- List Running Container**
+**Step-16:- The docker network inspect command is used to view detailed configuration of the created ipvlan network, including subnet, gateway, and parent interface**
 ```bash
-docker ps
+docker network inspect myipvlan
 ```
 ![List Containers](./Images/16.png)
 
 
-**Step-17:- List Volumes**
-```bash
-docker volume ls 
-```
+**Step-17:-The docker-compose.yml file is created to define and manage both services: backend API and PostgreSQL database.
+
+Key configurations included:
+
+Backend service using backend-image
+
+Database service using postgres-image
+
+Static IP assignment in the ipvlan network
+
+Named volume for PostgreSQL data persistence
+
+Environment variables for database connection**
 ![List Volumes](./Images/17.png)
 
 
-**Step-18:- Inspect Network**
+**Step-18:- The docker compose up -d command is used to start both services defined in the compose file in detached mode**
 ```bash
-docker network inspect macvlan_net
+docker compose up -d
 ```
 ![Inspect Network](./Images/18.png)
 
 
-**Step-19:- Inspect Backend Container**
+**Step-19:-After starting the services, the docker ps command is used to verify that the containers are running successfully.**
 ```bash
-docker inspect node_backend
+docker ps
 ```
 ![Inspect Backend](./Images/19.png)
 
 
-**Step-20:- Inspect DB**
+**Step-20:-The docker inspect command is used to check detailed information about the backend container, including the assigned static IP address in the ipvlan network**
 ```bash
-docker inspect postgres_db
+docker inspect backend_api
 ```
 ![Inspect DB](./Images/20.png)
 
 
-**Step-21:- Verify Data Persistence**
-This step will verify that data stored in DB is permanently saved irrespective of the state of the container.
+**Step-21:- The docker inspect command is used to verify the PostgreSQL container configuration and its assigned static IP address inside the ipvlan network**
 ```bash
-docker-compose down
-docker-compose up -d
-curl http://192.168.50.20:3000/users
+docker inspect postgres_db
 ```
 ![Restart Compose & Run API](./Images/21.png)
 
+**Step-22:-To test the API internally, we access the backend container shell using the docker exec command**
+```bash
+docker exec -it backend_api sh
+```
+**Inside the container we verify that the backend API is running using the health endpoint.**
+```bash
+wget -qO- localhost:3000/health
+```
+![Inspect DB](./Images/22.png)
 
+**Step-23:-Next, we test the POST API endpoint to insert a new user record into the PostgreSQL database.**
+```bash
+wget --post-data='{"name":"Arnav"}' \
+--header="Content-Type: application/json" \
+-qO- localhost:3000/user
+```
+![Inspect DB](./Images/23.png)
+
+**Step-24:-The response confirms that the user was successfully inserted into the database.**
+```bash
+User added
+```
+![Inspect DB](./Images/24.png)
+
+**Step-25:-Finally, we verify that the data has been stored successfully by calling the GET API endpoint.**
+```bash
+wget -qO- localhost:3000/users
+```
+**Example output**
+```bash
+[
+ {"id":1,"name":"Arnav"},
+ {"id":2,"name":"Arnav"},
+ {"id":3,"name":"Arnav"}
+]
+```
+![Inspect DB](./Images/25.png)
+
+**Step-26:-After entering the backend container, we verify that the API service is running correctly using the health endpoint.**
+```bash
+wget -qO- localhost:3000/health
+```
+![Inspect DB](./Images/26.png)
+
+**Step-27:-To verify that the database data is persistent, we stop and restart the services using Docker Compose.**
+```bash
+docker compose down
+docker compose up -d
+```
+![Inspect DB](./Images/27.png)
+
+**Step-28:-Finally, we access the backend container again and fetch the stored users to confirm that the data still exists after the restart.**
+```bash
+docker exec -it backend_api sh
+wget -qO- localhost:3000/users
+```
 
 <hr>
 
@@ -188,22 +268,22 @@ curl http://192.168.50.20:3000/users
 
 **_Build Optimization Explanation_**
 
-Several optimization techniques were used while building the Docker images to make them efficient, secure, and lightweight.
+While building the Docker images for this project, several techniques were applied to make the containers lightweight, efficient, and secure.
 
-First, a multi-stage build was used in the backend Dockerfile. In this approach, the application dependencies are installed in a builder stage, and only the necessary files are copied to the final runtime stage. This helps reduce the final image size because build tools and unnecessary files are not included in the runtime container.
+One important optimization used is the multi-stage build in the backend Dockerfile. In this method, dependencies are installed in an initial build stage, and only the required application files are copied to the final runtime image. This approach removes unnecessary build tools and files from the final container, resulting in a smaller image size.
 
-Second, a minimal base image (node:20-alpine) was used instead of a full Node.js image. Alpine Linux is lightweight and helps reduce the image size significantly, resulting in faster downloads and faster container startup.
+Another optimization is the use of a lightweight base image (node:18-alpine) instead of the standard Node.js image. Alpine Linux is much smaller in size, which helps reduce the overall image size, improves download speed, and allows containers to start faster.
 
-A .dockerignore file was also used to exclude unnecessary files such as node_modules, .git, and log files from the Docker build context. This improves build performance and prevents unwanted files from being included in the image.
+A .dockerignore file is also included in the project. It prevents unnecessary files such as node_modules, .git, and log files from being sent to the Docker build context. This improves the build speed and keeps the final image clean.
 
-> Finally, the container runs using a non-root user to improve security. Running containers without root privileges reduces potential risks if the application is compromised.
+Finally, the container runs with a non-root user. Running containers as a non-root user improves security because it limits the permissions available inside the container in case the application is compromised.
 
 
 <br>
 
 **_Network Design Diagram_**
 
-![Network Diagram](./Images/22.jpg)
+![Network Diagram](./Images/flow.png)
 
 
 <br>
@@ -211,21 +291,22 @@ A .dockerignore file was also used to exclude unnecessary files such as node_mod
 
 **_Image Size Comparison_**
 
-Different base images can significantly affect the final Docker image size.
+The choice of base image significantly affects the final Docker image size.
 
-- node:20 => 1.1 GB
-- node:20-alpine => 180 MB
+node:18 → approximately 1.1 GB
 
-The Alpine-based image is much smaller than the standard Node.js image. Using a smaller image reduces storage usage, speeds up image downloads, and improves container startup time.
+node:18-alpine → approximately 180 MB
 
-Therefore, the `node:20-alpine` image was chosen in this project to create a lightweight and efficient container.
+The Alpine-based image is considerably smaller than the standard Node.js image. Using a smaller base image helps reduce storage requirements, speeds up image transfers, and improves container startup performance.
+
+Therefore, the node:18-alpine image was selected in this project to build a more efficient containerized application
 
 
 **_Macvlan Vs IPvlan_**
 
-| Feature | MACVLAN | IPVLAN |
-|--------|---------|--------|
-| MAC addresses | One per container | One shared for all |
-| Network switch load | Higher (learns many MACs) | Lower (one MAC) |
-| Scalability | Limited by switch | Much higher |
-| Best for | Small deployments | Large-scale |
+| Feature       | MACVLAN                                  | IPVLAN                                |
+| ------------- | ---------------------------------------- | ------------------------------------- |
+| MAC Address   | Each container gets a unique MAC address | Containers share the host MAC address |
+| Network Load  | Higher load on network switches          | Lower load on network switches        |
+| Scalability   | Limited by switch MAC table              | More scalable                         |
+| Typical Usage | Small environments                       | Large scale deployments               |
