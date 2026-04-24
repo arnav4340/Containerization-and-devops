@@ -1,0 +1,7 @@
+services:
+  nodeapp:
+    build:
+      context: .
+    container_name: custom-node-app
+    ports:
+      - "3000:3000"
