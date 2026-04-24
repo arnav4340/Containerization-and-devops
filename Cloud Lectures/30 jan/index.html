@@ -31,11 +31,18 @@ body {
 <article class="markdown-body" id="content"></article>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
 <script>
-.then(response => response.text())
-.then(text => {
-  document.getElementById('content').innerHTML = marked.parse(text);
-});
+// ✅ Fetch your markdown file (change filename if needed)
+fetch('README.md')
+  .then(response => response.text())
+  .then(text => {
+    document.getElementById('content').innerHTML = marked.parse(text);
+  })
+  .catch(error => {
+    document.getElementById('content').innerHTML = "<p>Error loading content</p>";
+    console.error(error);
+  });
 </script>
 
 </body>

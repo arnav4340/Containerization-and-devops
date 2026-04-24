@@ -11,44 +11,45 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
   <style>
-body {
-  background: #f6f8fa;
-  margin: 0;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-}
+    body {
+      background: #f6f8fa;
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
 
-.container {
-  max-width: 900px;
-  margin: auto;
-}
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
 
-.back-btn {
-  display: inline-block;
-  margin-bottom: 15px;
-  text-decoration: none;
-  color: #0366d6;
-  font-weight: 600;
-}
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 15px;
+      text-decoration: none;
+      color: #0366d6;
+      font-weight: 600;
+    }
 
-.markdown-body {
-  box-sizing: border-box;
-  padding: 45px;
-  background: white;
-  border-radius: 10px;
+    .back-btn:hover {
+      text-decoration: underline;
+    }
 
-  /* 🔥 IMPORTANT FIX */
-  color: #24292f;
-}
+    .markdown-body {
+      box-sizing: border-box;
+      padding: 45px;
+      background: white;
+      border-radius: 10px;
+    }
 
-img {
-  max-width: 100%;
-}
+    img {
+      max-width: 100%;
+    }
 
-pre {
-  overflow-x: auto;
-}
-</style>
+    pre {
+      overflow-x: auto;
+    }
+  </style>
 </head>
 
 <body>
@@ -64,6 +65,7 @@ pre {
 </div>
 
 <script>
+fetch('README.md')
   .then(response => {
     if (!response.ok) {
       throw new Error("README not found");
@@ -84,7 +86,7 @@ pre {
   })
   .catch(err => {
     document.getElementById('content').innerHTML =
-      "<p style='color:red;'></p>";
+      "<p style='color:red;'>Error loading README.md</p>";
     console.error(err);
   });
 </script>
