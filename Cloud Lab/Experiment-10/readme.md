@@ -1,9 +1,10 @@
-Below is a complete `README.md` for **Experiment 10: Static Code Analysis with SonarQube**. The experiment uses a sample Java Maven project, runs SonarQube inside a Docker container, and performs code quality analysis. All your provided screenshots (`1.png` … `10.png`) are referenced.
+## Experiment 10:Static Code Analysis with SonarQube
 
-Put this file in your `Experiment-10/` folder and place the images in an `Images/` subdirectory.
+<hr>
 
-```markdown
-<h2 align="center">Experiment 10: Static Code Analysis with SonarQube</h2>
+<h4 align="center">Static Code Analysis with SonarQube</h4>
+
+<hr>
 
 This experiment demonstrates how to set up SonarQube (a continuous code quality inspection tool) using Docker, integrate it with a Maven‑based Java project, and analyse the code for bugs, vulnerabilities, and code smells.
 

@@ -1,6 +1,10 @@
+## Experiment 9:Docker –Ansible – Agentless Configuration Management
 
-```markdown
-<h2 align="center">Experiment 9: Ansible – Agentless Configuration Management</h2>
+<hr>
+
+<h4 align="center">Ansible – Agentless Configuration Management</h4>
+
+<hr>
 
 This experiment demonstrates how Ansible solves infrastructure management problems through agentless automation, idempotent playbooks, and declarative YAML syntax. We will set up a control node (WSL/Ubuntu), create four Docker containers as managed servers, and use Ansible to configure them consistently.
 

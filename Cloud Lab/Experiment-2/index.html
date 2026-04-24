@@ -1,34 +1,93 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Experiment 2</title>
+  <meta charset="UTF-8">
+  <title><Experiment-2></Experiment-2></title>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css">
+  <!-- GitHub Markdown Styling -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css">
 
-<style>
+  <!-- Markdown Parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <style>
 body {
-  box-sizing: border-box;
-  min-width: 200px;
+  background: #f6f8fa;
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.container {
   max-width: 900px;
-  margin: 40px auto;
+  margin: auto;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-bottom: 15px;
+  text-decoration: none;
+  color: #0366d6;
+  font-weight: 600;
+}
+
+.markdown-body {
+  box-sizing: border-box;
   padding: 45px;
+  background: white;
+  border-radius: 10px;
+
+  /* 🔥 IMPORTANT FIX */
+  color: #24292f;
+}
+
+img {
+  max-width: 100%;
+}
+
+pre {
+  overflow-x: auto;
 }
 </style>
 </head>
+
 <body>
 
-<a href="../../index.html">⬅ Back to Home</a>
+<div class="container">
 
-<article class="markdown-body" id="content"></article>
+  <a href="../../index.html" class="back-btn">← Back to Home</a>
 
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <div id="content" class="markdown-body">
+    Loading README...
+  </div>
+
+</div>
+
 <script>
 fetch('README.md')
-.then(response => response.text())
-.then(text => {
-  document.getElementById('content').innerHTML = marked.parse(text);
-});
+  .then(response => {
+    if (!response.ok) {
+      throw new Error("README not found");
+    }
+    return response.text();
+  })
+  .then(md => {
+
+    // 🔥 Fix relative image paths automatically
+    md = md.replace(/!\[(.*?)\]\((.*?)\)/g, (match, alt, path) => {
+      if (!path.startsWith('http') && !path.startsWith('/')) {
+        return `![${alt}](Images/${path.split('/').pop()})`;
+      }
+      return match;
+    });
+
+    document.getElementById('content').innerHTML = marked.parse(md);
+  })
+  .catch(err => {
+    document.getElementById('content').innerHTML =
+      "<p style='color:red;'>Error loading README.md</p>";
+    console.error(err);
+  });
 </script>
 
 </body>

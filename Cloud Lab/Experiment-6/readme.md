@@ -1,7 +1,10 @@
-Below is a **complete, corrected `README.md`** for Experiment 6. It includes **all** screenshots (`1.png` … `18.png`), with proper captions and contexts. The missing images (`2.png`, `12.png`, `18.png`) are now integrated. Just copy the code into your `Experiment-6/README.md` and place all screenshots in an `Images/` subfolder.
+## Experiment 6:Docker Run vs Docker Compose
 
-```markdown
-<h2 align="center">Experiment 6: Docker Run vs Docker Compose</h2>
+<hr>
+
+<h4 align="center"> Docker Run vs Docker Compose </h4>
+
+<hr>
 
 This experiment compares the imperative (`docker run`) and declarative (`docker-compose.yml`) approaches for container deployment. It covers single‑container setups, multi‑container applications (WordPress + MySQL), building custom images, resource limits, and an introduction to scaling with Docker Swarm.
 
