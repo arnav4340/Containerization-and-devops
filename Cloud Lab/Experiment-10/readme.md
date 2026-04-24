@@ -223,6 +223,6 @@ If you want to remove the container automatically when stopped, add `--rm` to th
 1. Inside `Experiment-10/`, create an `Images/` folder.
 2. Copy all screenshot files (`1.png` … `10.png`) into `Images/`.
 3. Also place the `sample-java-app` folder (with `pom.xml`, `src/`, etc.) in the same directory.
-4. Push the `README.md` and the project files.
+4. Push the  and the project files.
 
 Now your SonarQube experiment documentation is complete and matches the images you provided.

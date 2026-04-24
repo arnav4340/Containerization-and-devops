@@ -422,4 +422,4 @@ docker image prune -f
 2. The `monitor.sh` script and the `app.py` + `Dockerfile` shown in the screenshots are already included as code blocks – you can also add them as separate files in your repository.
 3. Adjust the image paths if you prefer to keep the screenshots in the same folder (just remove `Images/` from each `src`). The above assumes the standard `./Images/` subdirectory.
 
-Now you can copy the whole block into your `README.md` and push it to GitHub.
+Now you can copy the whole block into your  and push it to GitHub.

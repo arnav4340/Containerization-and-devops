@@ -426,6 +426,6 @@ docker swarm leave --force
 1. Create an `Images/` folder inside `Experiment-6/`.
 2. Copy **all** screenshot files (`1.png` … `18.png`) into `Images/`.
 3. Ensure that the directory structure matches the one shown in `12.png` (task1-nginx, task2-wordpress, task3-webapp, task4-app, task5-nodeapp folders).
-4. Push the `README.md` together with your code files.
+4. Push the  together with your code files.
 
 Now every image is properly referenced and the README is fully self‑contained.

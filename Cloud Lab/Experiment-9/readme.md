@@ -307,7 +307,7 @@ docker rmi ubuntu-server
 **Instructions for GitHub:**
 1. Create an `Images/` folder inside `Experiment-9/`.
 2. Copy all screenshot files (`1.png` … `10.png`, `12.png`, and optionally the folder structure image if you want to include it) into `Images/`.
-3. Place the `README.md`, `Dockerfile`, `id_rsa`, `id_rsa.pub`, `inventory.ini`, and `playbook1.yml` in the same directory (the keys can be omitted from the repository for security; the README explains how to generate them).
+3. Place the , `Dockerfile`, `id_rsa`, `id_rsa.pub`, `inventory.ini`, and `playbook1.yml` in the same directory (the keys can be omitted from the repository for security; the README explains how to generate them).
 4. Push to GitHub.
 
 Now your Ansible experiment documentation is ready, properly formatted, and includes all referenced images.
