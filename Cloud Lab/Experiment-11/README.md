@@ -1,9 +1,6 @@
-Below is a complete `README.md` for **Experiment 11: Orchestration using Docker Swarm** (continuation of Experiment 6). It uses your PDF content and all screenshots (`1.png` … `14.png`). Place this file in your `Experiment-11/` folder and put the images in an `Images/` subdirectory.
-
+**Experiment 11: Orchestration using Docker Swarm** 
 ```markdown
-<h2 align="center">Experiment 11: Orchestration using Docker Swarm (Continuation of Experiment 6)</h2>
-
-This experiment extends the WordPress + MySQL setup from **Experiment 6** by deploying it as a **Docker Swarm stack**. We explore orchestration features such as scaling, self‑healing, load balancing, and compare Swarm with plain Docker Compose.
+<h2 align="center">Experiment 11: Orchestration using Docker Swarm</h2>
 
 ---
 
@@ -28,13 +25,6 @@ This experiment extends the WordPress + MySQL setup from **Experiment 6** by dep
 ---
 
 ## Part A – Orchestration Concepts
-
-From Experiment 6, we know:
-
-| Tool | What it does | Limitation |
-|------|--------------|-------------|
-| `docker run` | Runs a single container | Manual coordination |
-| Docker Compose | Runs multiple containers together | Single machine, no auto‑healing |
 
 **Orchestration** = automatic management of containers.  
 It adds:
