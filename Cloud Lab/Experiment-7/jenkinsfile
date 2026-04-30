@@ -1,0 +1,46 @@
+pipeline {
+  agent any
+
+  environment {
+    IMAGE_NAME = "your-dockerhub-username/myapp"
+  }
+
+  stages {
+
+    stage('Clone Repo') {
+      steps {
+        git 'https://github.com/<your-username>/Containerization-and-devops.git'
+      }
+    }
+
+    stage('Move to Experiment-7') {
+      steps {
+        dir('Cloud Lab/Experiment-7') {
+          sh 'ls'
+        }
+      }
+    }
+
+    stage('Build Image') {
+      steps {
+        dir('Cloud Lab/Experiment-7') {
+          sh 'docker build -t $IMAGE_NAME:latest .'
+        }
+      }
+    }
+
+    stage('Login DockerHub') {
+      steps {
+        withCredentials([string(credentialsId: 'dockerhub-token', variable: 'DOCKER_TOKEN')]) {
+          sh 'echo $DOCKER_TOKEN | docker login -u your-dockerhub-username --password-stdin'
+        }
+      }
+    }
+
+    stage('Push Image') {
+      steps {
+        sh 'docker push $IMAGE_NAME:latest'
+      }
+    }
+  }
+}
