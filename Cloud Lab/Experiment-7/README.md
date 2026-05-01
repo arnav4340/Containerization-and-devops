@@ -1,6 +1,3 @@
-Here is the `README.md` for **Experiment 7: CI/CD using Jenkins, GitHub and Docker Hub**. It follows your PDF and includes all images (`1.png` to `10.png`). Place the images in an `Images/` folder.
-
-```markdown
 # Experiment 7: CI/CD using Jenkins, GitHub and Docker Hub
 
 ## 1. Aim

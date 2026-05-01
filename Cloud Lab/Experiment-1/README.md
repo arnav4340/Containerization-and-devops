@@ -4,8 +4,6 @@ Hii My name is Arnav
 This screenshot shows the installed Vagrant version on my system.
 
 ![Vagrant Version Screenshot](Images/SS1.png)
-
-
 Initializing the vagrant with the ubuntu box
 
 ![Vagrant Version Screenshot](Images/SS2.png)
