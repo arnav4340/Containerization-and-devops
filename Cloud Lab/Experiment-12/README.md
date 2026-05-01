@@ -1,4 +1,11 @@
 # Experiment 12: Study and Analyse Container Orchestration using Kubernetes
+
+<hr>
+
+<h4 align="center">Study and Analyse Container Orchestration using Kubernetes</h4>
+
+<hr>
+
 ## Objective
 Learn why Kubernetes is used, its basic concepts, and how to deploy, scale, and fix apps using Kubernetes commands.
 

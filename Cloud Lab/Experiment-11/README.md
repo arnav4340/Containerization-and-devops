@@ -1,6 +1,10 @@
-**Experiment 11: Orchestration using Docker Swarm** 
+## Experiment 11: Orchestration using Docker Swarm
 ```markdown
-<h2 align="center">Experiment 11: Orchestration using Docker Swarm</h2>
+<hr>
+
+<h4 align="center"> Orchestration using Docker Swarm</h4>
+
+<hr>
 
 ---
 
