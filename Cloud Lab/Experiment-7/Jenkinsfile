@@ -9,8 +9,7 @@ pipeline {
 
     stage('Clone Repo') {
       steps {
-        git 'https://github.com/arnav4340/Containerization-and-devops.git'
-      }
+      git branch: 'main', url: 'https://github.com/arnav4340/Containerization-and-devops.git'      }
     }
 
     stage('Move to Experiment-7') {
