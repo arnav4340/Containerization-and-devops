@@ -2,14 +2,16 @@ pipeline {
   agent any
 
   environment {
-    IMAGE_NAME = "arnav4340/myapp"
+    IMAGE_NAME = "arnavarnav/myapp"
   }
 
   stages {
 
-    stage('Clone Repo') {
+    stage('Checkout Code') {
       steps {
-      git branch: 'main', url: 'https://github.com/arnav4340/Containerization-and-devops.git'      }
+        // Jenkins already checks out, but keeping clean version
+        git branch: 'main', url: 'https://github.com/arnav4340/Containerization-and-devops.git'
+      }
     }
 
     stage('Move to Experiment-7') {
@@ -31,7 +33,8 @@ pipeline {
     stage('Login DockerHub') {
       steps {
         withCredentials([string(credentialsId: 'dockerhub-token', variable: 'DOCKER_TOKEN')]) {
-        sh 'echo $DOCKER_TOKEN | docker login -u arnav4340 --password-stdin'        }
+          sh 'echo $DOCKER_TOKEN | docker login -u arnavarnav --password-stdin'
+        }
       }
     }
 
